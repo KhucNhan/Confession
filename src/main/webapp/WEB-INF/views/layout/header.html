@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:fragment="header" class="border-b border-gray-200 sticky top-0 bg-white z-30">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+        <div class="flex items-center space-x-8">
+            <a class="flex items-center space-x-1" href="#">
+                <img alt="Speech bubble icon representing anonymous confession" class="w-6 h-6" height="24"
+                     src="https://storage.googleapis.com/a1aa/image/218d3c19-6273-411d-4e5a-fb1f9780e8f9.jpg"
+                     width="24"/>
+                <span class="font-extrabold text-xl tracking-tight">
+       CONFESSION
+      </span>
+                <span class="text-xs font-light uppercase tracking-widest">
+       ANONYMOUS
+      </span>
+            </a>
+            <nav class="hidden md:flex space-x-6 font-semibold text-sm">
+                <a class="text-lime-600 font-extrabold hover:underline" href="#">
+                    HOME
+                </a>
+                <div class="relative group">
+                    <button aria-expanded="false" aria-haspopup="true"
+                            class="flex items-center space-x-1 hover:underline focus:outline-none">
+        <span>
+         CATEGORIES
+        </span>
+                        <i class="fas fa-caret-down text-xs">
+                        </i>
+                    </button>
+                </div>
+                <a class="hover:underline" href="#">
+                    SITE RULES
+                </a>
+                <a class="hover:underline" href="#">
+                    CONTACT US
+                </a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a aria-label="Twitter" class="text-black hover:text-gray-600" href="#">
+                <i class="fab fa-twitter fa-lg">
+                </i>
+            </a>
+            <a aria-label="Instagram" class="text-black hover:text-gray-600" href="#">
+                <i class="fab fa-instagram fa-lg">
+                </i>
+            </a>
+            <a aria-label="Facebook" class="text-black hover:text-gray-600" href="#">
+                <i class="fab fa-facebook-f fa-lg">
+                </i>
+            </a>
+            <form class="relative hidden sm:block">
+                <input aria-label="Search"
+                       class="border border-gray-300 rounded-md py-1.5 pl-3 pr-8 text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-lime-600 focus:border-lime-600"
+                       placeholder="Search …" type="search"/>
+                <button aria-label="Search button" class="absolute right-1 top-1.5 text-gray-400 hover:text-gray-600"
+                        type="submit">
+                    <i class="fas fa-search">
+                    </i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- Subnav -->
+    <nav aria-label="Secondary navigation"
+         class="max-w-7xl mx-auto flex flex-wrap items-center justify-start space-x-3 text-xs sm:text-sm px-4 py-2 border-t border-gray-100 shadow-sm">
+        <a class="hover:underline" href="#">
+            Business
+        </a>
+        <a class="hover:underline" href="#">
+            Crime
+        </a>
+        <a class="hover:underline" href="#">
+            Family
+        </a>
+        <a class="hover:underline" href="#">
+            Friend
+        </a>
+        <a class="hover:underline" href="#">
+            Job
+        </a>
+        <a class="hover:underline" href="#">
+            Life
+        </a>
+        <a class="hover:underline" href="#">
+            Parent
+        </a>
+        <a class="hover:underline" href="#">
+            Pet
+        </a>
+        <a class="hover:underline" href="#">
+            Relationship
+        </a>
+        <div class="relative group">
+            <button aria-expanded="false" aria-haspopup="true"
+                    class="flex items-center space-x-1 hover:underline focus:outline-none">
+      <span>
+       School
+      </span>
+                <i class="fas fa-caret-down text-xs">
+                </i>
+            </button>
+        </div>
+        <a class="hover:underline" href="#">
+            Television
+        </a>
+        <a class="hover:underline" href="#">
+            Vacation
+        </a>
+        <a class="hover:underline" href="#">
+            Uncategorized
+        </a>
+        <button aria-label="Toggle dark mode" class="ml-auto text-xl hover:text-gray-600 focus:outline-none">
+            <i class="fas fa-moon">
+            </i>
+        </button>
+        <button class="ml-3 bg-lime-600 text-white font-extrabold text-xs sm:text-sm px-4 py-2 rounded-md hover:bg-lime-700">
+            ADD CONFESSION
+        </button>
+    </nav>
+</header>
+</body>
+</html>

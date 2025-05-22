@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>
+        uConfess
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white text-black">
+<!-- Top Nav -->
+<div th:include="~{/layout/header :: header}"></div>
+
+<main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <!-- Left content -->
+    <section class="lg:col-span-3 space-y-6">
+        <!-- Tabs -->
+        <nav class="flex space-x-6 border-b border-gray-300 pb-2 font-extrabold text-sm">
+            <button class="border-b-2 border-black pb-1">NEW</button>
+            <button class="text-gray-500 font-semibold">HOT</button>
+            <button class="text-gray-500 font-semibold">POPULAR</button>
+            <button class="text-gray-500 font-semibold">TRENDING</button>
+        </nav>
+
+        <!-- Loop over posts -->
+        <div th:each="post : ${posts}">
+            <article class="bg-gray-50 p-4 shadow-sm">
+                <div class="flex items-center space-x-3 text-xs text-gray-400 mb-1 select-none">
+                    <!-- Views -->
+                    <div class="flex items-center space-x-1">
+                        <i class="far fa-eye"></i>
+                        <span th:text="${#numbers.formatDecimal(post.views, 0, 'NONE', 0, 'NONE')}"></span>
+                    </div>
+
+                    <!-- Comments -->
+                    <div class="flex items-center space-x-1">
+                        <i class="far fa-comment"></i>
+                        <span th:text="' Comments'"></span>
+                    </div>
+
+                    <!-- Votes -->
+                    <div class="flex items-center space-x-1">
+                        <!--                        <span th:text="${#lists.size(post.likeDislikes.?[isLike==true]) - #lists.size(post.likeDislikes.?[isLike==false])} + ' Votes'"></span>-->
+                    </div>
+                </div>
+
+                <div>
+                    <span class="inline-block bg-gray-800 text-white text-[10px] font-extrabold px-2 py-0.5 mb-1" th:text="${post.category.categoryName}"></span>
+                    <h2 class="font-extrabold text-lg leading-tight mb-1" th:text="${post.title}"></h2>
+
+                    <!-- Trích nội dung -->
+                    <p class="text-sm leading-relaxed text-gray-800">
+                        <span th:text="${post.content.length() > 200} ? ${post.content.substring(0, 200)} + ' [...]' : ${post.content}"></span>
+                        <span class="font-extrabold">MORE</span>
+                    </p>
+                </div>
+
+                <footer class="mt-4 flex items-center justify-between text-sm font-semibold select-none">
+                    <div class="flex items-center space-x-1">
+                        <button class="bg-gray-200 px-3 py-1 rounded-sm hover:bg-gray-300">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="bg-gray-200 px-3 py-1 rounded-sm hover:bg-gray-300">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <!--                        <span th:text="'+' + (${#lists.size(post.likeDislikes.?[isLike==true]) - #lists.size(post.likeDislikes.?[isLike==false])})"></span>-->
+                    </div>
+                    <button class="text-xl text-gray-600 hover:text-gray-800">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </footer>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Right sidebar -->
+    <aside class="hidden lg:block">
+        <h3 class="font-extrabold text-base mb-4">TAGGED CONFESSIONS</h3>
+        <div class="flex flex-wrap gap-2">
+            <span th:each="tag : ${tags}"
+                  class="bg-gray-300 text-gray-700 text-xs font-semibold rounded-full px-3 py-1"
+                  th:text="'# ' + ${tag.tagName}">
+            </span>
+        </div>
+    </aside>
+</main>
+
+</body>
+</html>
