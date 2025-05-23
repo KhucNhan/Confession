@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="postsList" lang="en">
-<div id="posts-container">
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<div id="posts-container" th:fragment="postsList">
     <div th:each="post : ${posts}">
         <article style="margin-bottom: 10px;" class="bg-gray-50 p-4 shadow-sm">
             <div class="flex items-center space-x-3 text-xs text-gray-400 mb-1 select-none">
