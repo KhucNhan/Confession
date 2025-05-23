@@ -1,54 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
 <div id="posts-container" th:fragment="postsList">
     <div th:each="post : ${posts}">
-        <article style="margin-bottom: 10px;" class="bg-gray-50 p-4 shadow-sm">
-            <div class="flex items-center space-x-3 text-xs text-gray-400 mb-1 select-none">
-                <!-- Views -->
-                <div class="flex items-center space-x-1">
+        <article class="post-article">
+            <div class="post-meta">
+                <div class="post-meta-icon">
                     <i class="far fa-eye"></i>
                     <span th:text="${#numbers.formatDecimal(post.views, 0, 'NONE', 0, 'NONE')}"></span>
                 </div>
-
-                <!-- Comments -->
-                <div class="flex items-center space-x-1">
+                <div class="post-meta-icon">
                     <i class="far fa-comment"></i>
                     <span th:text="' Comments'"></span>
                 </div>
-
-                <!-- Votes -->
-                <div class="flex items-center space-x-1">
-                    <!--                        <span th:text="${#lists.size(post.likeDislikes.?[isLike==true]) - #lists.size(post.likeDislikes.?[isLike==false])} + ' Votes'"></span>-->
+                <div class="post-meta-icon">
+                    <!-- <span th:text="${...}"></span> -->
                 </div>
             </div>
 
             <div>
-                <span class="inline-block bg-gray-800 text-white text-[10px] font-extrabold px-2 py-0.5 mb-1" th:text="${post.category.categoryName}"></span>
-                <h2 class="font-extrabold text-lg leading-tight mb-1" th:text="${post.title}"></h2>
-
-                <!-- Trích nội dung -->
-                <p class="text-sm leading-relaxed text-gray-800">
+                <span class="post-category" th:text="${post.category.categoryName}"></span>
+                <h2 class="post-title" th:text="${post.title}"></h2>
+                <p class="post-content">
                     <span th:text="${post.content.length() > 200} ? ${post.content.substring(0, 200)} + ' [...]' : ${post.content}"></span>
-                    <span class="font-extrabold">MORE</span>
+                    <span class="post-more">MORE</span>
                 </p>
             </div>
 
-            <footer class="mt-4 flex items-center justify-between text-sm font-semibold select-none">
-                <div class="flex items-center space-x-1">
-                    <button class="bg-gray-200 px-3 py-1 rounded-sm hover:bg-gray-300">
+            <footer class="post-footer">
+                <div class="post-vote">
+                    <button class="post-vote-btn">
                         <i class="fas fa-arrow-up"></i>
                     </button>
-                    <button class="bg-gray-200 px-3 py-1 rounded-sm hover:bg-gray-300">
+                    <button class="post-vote-btn">
                         <i class="fas fa-arrow-down"></i>
                     </button>
-                    <!--                        <span th:text="'+' + (${#lists.size(post.likeDislikes.?[isLike==true]) - #lists.size(post.likeDislikes.?[isLike==false])})"></span>-->
                 </div>
-                <button class="text-xl text-gray-600 hover:text-gray-800">
+                <button class="post-options-btn">
                     <i class="fas fa-ellipsis-h"></i>
                 </button>
             </footer>
         </article>
-
     </div>
 </div>
+</body>
 </html>

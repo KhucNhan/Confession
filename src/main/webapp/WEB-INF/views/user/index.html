@@ -2,50 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <title>
-        uConfess
-    </title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Confession</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/index.css"/>
+    <link rel="stylesheet" href="/css/post.css"/>
+
+    <!-- Font + Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"/>
-    <style>
-        body {
-            font-family: "Montserrat", sans-serif;
-        }
-    </style>
 </head>
-<body class="bg-white text-black">
+<body>
+
 <!-- Top Nav -->
 <div th:replace="~{/fragments/header :: header}"></div>
 
-<main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+<main class="container">
     <!-- Left content -->
-    <section class="lg:col-span-3 space-y-6">
-
+    <section class="section-left">
         <!-- Tabs -->
-        <nav id="post-tabs" class="flex space-x-6 border-b border-gray-300 pb-2 font-extrabold text-sm">
-            <a th:href="@{/posts}" data-sort="new" th:classappend="${sort == 'new'} ? ' border-b-2 border-black pb-1' : ' text-gray-500 font-semibold'">NEW</a>
-            <a th:href="@{/posts}" data-sort="hot" th:classappend="${sort == 'hot'} ? ' border-b-2 border-black pb-1' : ' text-gray-500 font-semibold'">HOT</a>
-            <a th:href="@{/posts}" data-sort="popular" th:classappend="${sort == 'popular'} ? ' border-b-2 border-black pb-1' : ' text-gray-500 font-semibold'">POPULAR</a>
-            <a th:href="@{/posts}" data-sort="trending" th:classappend="${sort == 'trending'} ? ' border-b-2 border-black pb-1' : ' text-gray-500 font-semibold'">TRENDING</a>
+        <nav class="nav-tabs" id="post-tabs">
+            <a th:href="@{/posts}" data-sort="new"
+               th:classappend="${sort == 'new'} ? ' active' : ''">NEW</a>
+            <a th:href="@{/posts}" data-sort="hot"
+               th:classappend="${sort == 'hot'} ? ' active' : ''">HOT</a>
+            <a th:href="@{/posts}" data-sort="popular"
+               th:classappend="${sort == 'popular'} ? ' active' : ''">POPULAR</a>
+            <a th:href="@{/posts}" data-sort="trending"
+               th:classappend="${sort == 'trending'} ? ' active' : ''">TRENDING</a>
         </nav>
 
-        <!-- Đây là nơi load danh sách bài viết -->
+        <!-- Danh sách bài viết -->
         <div id="posts-container" th:replace="~{/fragments/postsList :: postsList}"></div>
 
         <script src="/static/js/posts.js"></script>
     </section>
 
     <!-- Right sidebar -->
-    <aside class="hidden lg:block">
-        <h3 class="font-extrabold text-base mb-4">TAGGED CONFESSIONS</h3>
-        <div class="flex flex-wrap gap-2">
-            <span th:each="tag : ${tags}"
-                  class="bg-gray-300 text-gray-700 text-xs font-semibold rounded-full px-3 py-1"
-                  th:text="'# ' + ${tag.tagName}">
-            </span>
+    <aside class="sidebar">
+        <h3>TAGGED CONFESSIONS</h3>
+        <div class="sidebar-tags">
+            <span th:each="tag : ${tags}" class="sidebar-tag" th:text="'# ' + ${tag.tagName}"></span>
         </div>
     </aside>
 </main>

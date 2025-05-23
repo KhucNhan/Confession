@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add Confession</title>
+    <link rel="stylesheet" href="/css/addConfession.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body class="body">
+
+<div th:replace="~{/fragments/header :: header}"></div>
+
+<h1 class="title">ADD CONFESSION</h1>
+<p class="subtitle">Anonymously</p>
+
+<main class="form-container">
+    <form class="form" th:action="@{/posts/create}" th:object="${post}" method="POST" novalidate>
+        <input type="hidden" th:field="*{postId}">
+
+        <!-- Title -->
+        <div class="form-row">
+            <label for="title" class="label">
+                <span>Title</span><span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+                <input id="title" name="title" type="text" th:field="*{title}" placeholder="" />
+                <p class="help-text">Enter a captivating title.</p>
+            </div>
+        </div>
+
+        <!-- Category -->
+        <div class="form-row">
+            <label for="category" class="label">
+                <span>Category</span><span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+                <select id="category" name="category">
+                    <option th:each="category : ${categories}" th:text="${category.categoryName}" th:value="${category.categoryName}"></option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Confession -->
+        <div class="form-row">
+            <label for="confession" class="label top">
+                <span>Confession</span><span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+                <textarea id="confession" name="confession" rows="6" th:field="*{content}"></textarea>
+                <p class="help-text">
+                    Remember to avoid specifics such as names and key details that might give away your anonymity.
+                </p>
+            </div>
+        </div>
+
+        <!-- Tag -->
+        <div class="form-row">
+            <label for="tag" class="label">Tag</label>
+            <div class="input-wrapper">
+                <input id="tag" name="tag" type="text" placeholder="" />
+                <p class="help-text">Describe your confession in one word. No # required.</p>
+            </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="form-row">
+            <label for="terms" class="label top">
+                <span>Terms and conditions</span><span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+                <div class="checkbox-wrapper">
+                    <input id="terms" name="terms" type="checkbox" />
+                    <label for="terms">I agree</label>
+                </div>
+                <p class="help-text">
+                    You must agree to our terms and conditions as outlined on our site.
+                    <span class="highlight">Click here to read our terms and conditions!</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Site rules -->
+        <div class="form-row">
+            <label for="rules" class="label top">
+                <span>Site rules</span><span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+                <div class="checkbox-wrapper">
+                    <input id="rules" name="rules" type="checkbox" />
+                    <label for="rules">I agree</label>
+                </div>
+                <p class="help-text">
+                    Please read our site rules before making your post. If it breaks any of the rules it will get deleted!
+                    <span class="highlight">Click here to read our posting rules!</span>
+                </p>
+            </div>
+        </div>
+    </form>
+</main>
+</body>
+</html>

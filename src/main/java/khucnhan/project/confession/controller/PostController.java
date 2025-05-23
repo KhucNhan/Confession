@@ -1,15 +1,13 @@
 package khucnhan.project.confession.controller;
 
 import khucnhan.project.confession.model.Post;
-import khucnhan.project.confession.model.Tag;
+import khucnhan.project.confession.service.CategoryService;
 import khucnhan.project.confession.service.PostService;
 import khucnhan.project.confession.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +23,13 @@ public class PostController {
 
     private final PostService postService;
     private final TagService tagService;
+    private final CategoryService categoryService;
     private final HttpServletRequest request;
 
-    public PostController(PostService postService, TagService tagService, HttpServletRequest request) {
+    public PostController(PostService postService, TagService tagService, CategoryService categoryService, HttpServletRequest request) {
         this.postService = postService;
         this.tagService = tagService;
+        this.categoryService = categoryService;
         this.request = request;
     }
 
@@ -37,12 +37,20 @@ public class PostController {
 
     // Tạo bài viết mới
     @PostMapping("/create")
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+    public String createPost(@RequestBody Post post, Model model) {
         post.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         post.setViews(0);
         post.setEditToken(UUID.randomUUID().toString()); // Tạo token duy nhất
         Post savedPost = postService.save(post);
-        return ResponseEntity.ok(savedPost);
+        model.addAttribute("token", savedPost.getEditToken());
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("post", new Post());
+        model.addAttribute("categories", categoryService.findAll());
+        return "/user/create";
     }
 
     // Lấy tất cả bài viết (không phân trang, cho người dùng)
