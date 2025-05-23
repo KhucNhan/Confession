@@ -36,7 +36,7 @@ public class PostController {
     // Tạo bài viết mới
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        post.setCreateAt(new Timestamp(System.currentTimeMillis()));
+        post.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         post.setViews(0);
         post.setEditToken(UUID.randomUUID().toString()); // Tạo token duy nhất
         Post savedPost = postService.save(post);
@@ -45,15 +45,20 @@ public class PostController {
 
     // Lấy tất cả bài viết (không phân trang, cho người dùng)
     @GetMapping("")
-    public String listPosts(Model model) {
-        List<Post> posts = postService.findAllWithoutPaging();
-        List<Tag> tags = tagService.findAll();
+    public String listPosts(@RequestParam(defaultValue = "new") String sort, Model model) {
+        List<Post> posts = switch (sort.toLowerCase()) {
+            case "hot" -> postService.findHotPosts();
+            case "popular" -> postService.findPopularPosts();
+            case "trending" -> postService.findTrendingPosts();
+            default -> postService.findNewestPosts();
+        };
 
         model.addAttribute("posts", posts);
-        model.addAttribute("tags", tags);
-
+        model.addAttribute("sort", sort);
+        model.addAttribute("tags", tagService.findAll());
         return "/user/index";
     }
+
 
     // Lấy chi tiết bài viết
     @GetMapping("/{id}")

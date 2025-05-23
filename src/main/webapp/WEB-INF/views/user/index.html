@@ -25,11 +25,12 @@
     <section class="lg:col-span-3 space-y-6">
         <!-- Tabs -->
         <nav class="flex space-x-6 border-b border-gray-300 pb-2 font-extrabold text-sm">
-            <button class="border-b-2 border-black pb-1">NEW</button>
-            <button class="text-gray-500 font-semibold">HOT</button>
-            <button class="text-gray-500 font-semibold">POPULAR</button>
-            <button class="text-gray-500 font-semibold">TRENDING</button>
+            <a th:href="@{/posts(sort='new')}" th:class="${sort == 'new'} ? 'border-b-2 border-black pb-1' : 'text-gray-500 font-semibold'">NEW</a>
+            <a th:href="@{/posts(sort='hot')}" th:class="${sort == 'hot'} ? 'border-b-2 border-black pb-1' : 'text-gray-500 font-semibold'">HOT</a>
+            <a th:href="@{/posts(sort='popular')}" th:class="${sort == 'popular'} ? 'border-b-2 border-black pb-1' : 'text-gray-500 font-semibold'">POPULAR</a>
+            <a th:href="@{/posts(sort='trending')}" th:class="${sort == 'trending'} ? 'border-b-2 border-black pb-1' : 'text-gray-500 font-semibold'">TRENDING</a>
         </nav>
+
 
         <!-- Loop over posts -->
         <div th:each="post : ${posts}">

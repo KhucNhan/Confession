@@ -14,5 +14,12 @@ public interface PostService {
     List<Post> findAllWithoutPaging();
     Page<Post> findAllWithPaging(Pageable pageable);
 
+    List<Post> findNewestPosts();
+
+    List<Post> findTrendingPosts();
+
+    List<Post> findPopularPosts();
+
+    List<Post> findHotPosts();
 }
 
