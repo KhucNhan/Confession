@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +25,12 @@ public class PostController {
 
     private final PostService postService;
     private final TagService tagService;
+    private final HttpServletRequest request;
 
-    @Autowired
-    public PostController(PostService postService, TagService tagService) {
+    public PostController(PostService postService, TagService tagService, HttpServletRequest request) {
         this.postService = postService;
         this.tagService = tagService;
+        this.request = request;
     }
 
     // ========================== NGƯỜI DÙNG ==========================
@@ -36,7 +38,7 @@ public class PostController {
     // Tạo bài viết mới
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        post.setCreateAt(new Timestamp(System.currentTimeMillis()));
+        post.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         post.setViews(0);
         post.setEditToken(UUID.randomUUID().toString()); // Tạo token duy nhất
         Post savedPost = postService.save(post);
@@ -45,15 +47,28 @@ public class PostController {
 
     // Lấy tất cả bài viết (không phân trang, cho người dùng)
     @GetMapping("")
-    public String listPosts(Model model) {
-        List<Post> posts = postService.findAllWithoutPaging();
-        List<Tag> tags = tagService.findAll();
+    public String listPosts(@RequestParam(defaultValue = "new") String sort, Model model) {
+        List<Post> posts = switch (sort.toLowerCase()) {
+            case "hot" -> postService.findHotPosts();
+            case "popular" -> postService.findPopularPosts();
+            case "trending" -> postService.findTrendingPosts();
+            default -> postService.findNewestPosts();
+        };
 
         model.addAttribute("posts", posts);
-        model.addAttribute("tags", tags);
+        model.addAttribute("sort", sort);
+        model.addAttribute("tags", tagService.findAll());
 
+        String requestedWith = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWith)) {
+            // Nếu là AJAX request thì trả về fragment postsList thôi
+            return "/fragments/postsList :: postsList";
+        }
+
+        // Load trang đầy đủ cho request thông thường
         return "/user/index";
     }
+
 
     // Lấy chi tiết bài viết
     @GetMapping("/{id}")

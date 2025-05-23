@@ -26,7 +26,7 @@ public class Post {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private Timestamp createAt;
+    private Timestamp createdAt;
 
     @Column(name = "views", nullable = false)
     private int views;
@@ -43,12 +43,12 @@ public class Post {
     // Constructors
     public Post() {}
 
-    public Post(long postId, Category category, String title, String content, Timestamp createAt, int views, String editToken, List<Comment> comments, List<LikeDislike> likeDislikes) {
+    public Post(long postId, Category category, String title, String content, Timestamp createdAt, int views, String editToken, List<Comment> comments, List<LikeDislike> likeDislikes) {
         this.postId = postId;
         this.category = category;
         this.title = title;
         this.content = content;
-        this.createAt = createAt;
+        this.createdAt = createdAt;
         this.views = views;
         this.editToken = editToken;
         this.comments = comments;
@@ -88,12 +88,12 @@ public class Post {
         this.content = content;
     }
 
-    public Timestamp getCreateAt() {
-        return createAt;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(Timestamp createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
     public int getViews() {

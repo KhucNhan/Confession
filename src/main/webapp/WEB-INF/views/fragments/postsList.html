@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="postsList" lang="en">
+<div id="posts-container">
+    <div th:each="post : ${posts}">
+        <article style="margin-bottom: 10px;" class="bg-gray-50 p-4 shadow-sm">
+            <div class="flex items-center space-x-3 text-xs text-gray-400 mb-1 select-none">
+                <!-- Views -->
+                <div class="flex items-center space-x-1">
+                    <i class="far fa-eye"></i>
+                    <span th:text="${#numbers.formatDecimal(post.views, 0, 'NONE', 0, 'NONE')}"></span>
+                </div>
+
+                <!-- Comments -->
+                <div class="flex items-center space-x-1">
+                    <i class="far fa-comment"></i>
+                    <span th:text="' Comments'"></span>
+                </div>
+
+                <!-- Votes -->
+                <div class="flex items-center space-x-1">
+                    <!--                        <span th:text="${#lists.size(post.likeDislikes.?[isLike==true]) - #lists.size(post.likeDislikes.?[isLike==false])} + ' Votes'"></span>-->
+                </div>
+            </div>
+
+            <div>
+                <span class="inline-block bg-gray-800 text-white text-[10px] font-extrabold px-2 py-0.5 mb-1" th:text="${post.category.categoryName}"></span>
+                <h2 class="font-extrabold text-lg leading-tight mb-1" th:text="${post.title}"></h2>
+
+                <!-- Trích nội dung -->
+                <p class="text-sm leading-relaxed text-gray-800">
+                    <span th:text="${post.content.length() > 200} ? ${post.content.substring(0, 200)} + ' [...]' : ${post.content}"></span>
+                    <span class="font-extrabold">MORE</span>
+                </p>
+            </div>
+
+            <footer class="mt-4 flex items-center justify-between text-sm font-semibold select-none">
+                <div class="flex items-center space-x-1">
+                    <button class="bg-gray-200 px-3 py-1 rounded-sm hover:bg-gray-300">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                    <button class="bg-gray-200 px-3 py-1 rounded-sm hover:bg-gray-300">
+                        <i class="fas fa-arrow-down"></i>
+                    </button>
+                    <!--                        <span th:text="'+' + (${#lists.size(post.likeDislikes.?[isLike==true]) - #lists.size(post.likeDislikes.?[isLike==false])})"></span>-->
+                </div>
+                <button class="text-xl text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+            </footer>
+        </article>
+
+    </div>
+</div>
+</html>

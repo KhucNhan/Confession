@@ -18,69 +18,24 @@
 </head>
 <body class="bg-white text-black">
 <!-- Top Nav -->
-<div th:include="~{/layout/header :: header}"></div>
+<div th:include="~{/fragments/header :: header}"></div>
 
 <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
     <!-- Left content -->
     <section class="lg:col-span-3 space-y-6">
+
         <!-- Tabs -->
-        <nav class="flex space-x-6 border-b border-gray-300 pb-2 font-extrabold text-sm">
-            <button class="border-b-2 border-black pb-1">NEW</button>
-            <button class="text-gray-500 font-semibold">HOT</button>
-            <button class="text-gray-500 font-semibold">POPULAR</button>
-            <button class="text-gray-500 font-semibold">TRENDING</button>
+        <nav id="post-tabs" class="flex space-x-6 border-b border-gray-300 pb-2 font-extrabold text-sm">
+            <a th:href="@{/posts}" data-sort="new" th:classappend="${sort == 'new'} ? ' border-b-2 border-black pb-1' : ' text-gray-500 font-semibold'">NEW</a>
+            <a th:href="@{/posts}" data-sort="hot" th:classappend="${sort == 'hot'} ? ' border-b-2 border-black pb-1' : ' text-gray-500 font-semibold'">HOT</a>
+            <a th:href="@{/posts}" data-sort="popular" th:classappend="${sort == 'popular'} ? ' border-b-2 border-black pb-1' : ' text-gray-500 font-semibold'">POPULAR</a>
+            <a th:href="@{/posts}" data-sort="trending" th:classappend="${sort == 'trending'} ? ' border-b-2 border-black pb-1' : ' text-gray-500 font-semibold'">TRENDING</a>
         </nav>
 
-        <!-- Loop over posts -->
-        <div th:each="post : ${posts}">
-            <article class="bg-gray-50 p-4 shadow-sm">
-                <div class="flex items-center space-x-3 text-xs text-gray-400 mb-1 select-none">
-                    <!-- Views -->
-                    <div class="flex items-center space-x-1">
-                        <i class="far fa-eye"></i>
-                        <span th:text="${#numbers.formatDecimal(post.views, 0, 'NONE', 0, 'NONE')}"></span>
-                    </div>
+        <!-- Đây là nơi load danh sách bài viết -->
+        <div id="posts-container" th:replace="~{/fragments/postsList :: postsList}"></div>
 
-                    <!-- Comments -->
-                    <div class="flex items-center space-x-1">
-                        <i class="far fa-comment"></i>
-                        <span th:text="' Comments'"></span>
-                    </div>
-
-                    <!-- Votes -->
-                    <div class="flex items-center space-x-1">
-                        <!--                        <span th:text="${#lists.size(post.likeDislikes.?[isLike==true]) - #lists.size(post.likeDislikes.?[isLike==false])} + ' Votes'"></span>-->
-                    </div>
-                </div>
-
-                <div>
-                    <span class="inline-block bg-gray-800 text-white text-[10px] font-extrabold px-2 py-0.5 mb-1" th:text="${post.category.categoryName}"></span>
-                    <h2 class="font-extrabold text-lg leading-tight mb-1" th:text="${post.title}"></h2>
-
-                    <!-- Trích nội dung -->
-                    <p class="text-sm leading-relaxed text-gray-800">
-                        <span th:text="${post.content.length() > 200} ? ${post.content.substring(0, 200)} + ' [...]' : ${post.content}"></span>
-                        <span class="font-extrabold">MORE</span>
-                    </p>
-                </div>
-
-                <footer class="mt-4 flex items-center justify-between text-sm font-semibold select-none">
-                    <div class="flex items-center space-x-1">
-                        <button class="bg-gray-200 px-3 py-1 rounded-sm hover:bg-gray-300">
-                            <i class="fas fa-arrow-up"></i>
-                        </button>
-                        <button class="bg-gray-200 px-3 py-1 rounded-sm hover:bg-gray-300">
-                            <i class="fas fa-arrow-down"></i>
-                        </button>
-                        <!--                        <span th:text="'+' + (${#lists.size(post.likeDislikes.?[isLike==true]) - #lists.size(post.likeDislikes.?[isLike==false])})"></span>-->
-                    </div>
-                    <button class="text-xl text-gray-600 hover:text-gray-800">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                </footer>
-            </article>
-
-        </div>
+        <script src="/static/js/posts.js"></script>
     </section>
 
     <!-- Right sidebar -->
