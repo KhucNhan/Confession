@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +25,12 @@ public class PostController {
 
     private final PostService postService;
     private final TagService tagService;
+    private final HttpServletRequest request;
 
-    @Autowired
-    public PostController(PostService postService, TagService tagService) {
+    public PostController(PostService postService, TagService tagService, HttpServletRequest request) {
         this.postService = postService;
         this.tagService = tagService;
+        this.request = request;
     }
 
     // ========================== NGƯỜI DÙNG ==========================
@@ -56,6 +58,14 @@ public class PostController {
         model.addAttribute("posts", posts);
         model.addAttribute("sort", sort);
         model.addAttribute("tags", tagService.findAll());
+
+        String requestedWith = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWith)) {
+            // Nếu là AJAX request thì trả về fragment postsList thôi
+            return "/fragments/postsList :: postsList";
+        }
+
+        // Load trang đầy đủ cho request thông thường
         return "/user/index";
     }
 
